@@ -1,0 +1,8 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>twitter</comment>
+    <entry key="AccessToken">value</entry>
+    <entry key="AccessTokenSecret">value</entry>
+    <entry key="ApiSecret">value</entry>
+    <entry key="ApiKey">value</entry>
+</properties>
