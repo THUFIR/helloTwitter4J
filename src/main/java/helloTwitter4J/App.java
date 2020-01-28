@@ -22,7 +22,7 @@ public class App {
     private void loadProperties() throws InvalidPropertiesFormatException, IOException, TwitterException {
 
         properties.loadFromXML(App.class.getResourceAsStream("/twitter.xml"));
-        log.info(properties.toString());
+        log.fine(properties.toString());
 
         Set<Object> keySet = properties.keySet();
         String key = null;
@@ -31,7 +31,7 @@ public class App {
         for (Object obj : keySet) {
             key = obj.toString();
             value = System.getenv(key);
-            log.info(key + value);
+            log.fine(key + value);
         }
         foo();
     }
