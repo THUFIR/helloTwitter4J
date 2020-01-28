@@ -33,30 +33,18 @@ public class App {
             value = System.getenv(key);
             log.info(key + value);
         }
-        foo();
+       // foo();
     }
 
 
-    /*
-
-        //Twitter Conf.
-    ConfigurationBuilder cb = new ConfigurationBuilder();
-    cb.setDebugEnabled(true)
-            .setOAuthConsumerKey(CONSUMER_KEY)
-            .setOAuthConsumerSecret(CONSUMER_SECRET)
-            .setOAuthAccessToken(ACCESS_KEY)
-            .setOAuthAccessTokenSecret(ACCESS_SECRET);
-
-    TwitterFactory tf = new TwitterFactory(cb.build());
-    Twitter twitter = tf.getInstance();
-    */
+    
     private void foo() throws TwitterException {
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.setDebugEnabled(true)
-            .setOAuthConsumerKey(oAuthConsumerKey)
-            .setOAuthConsumerSecret(oAuthConsumerSecret)
-            .setOAuthAccessToken(OAuthAccessToken)
-            .setOAuthAccessTokenSecret(setOAuthAccessTokenSecret)
+            .setOAuthConsumerKey(properties.getProperty("oAuthConsumerKey"))
+            .setOAuthConsumerSecret(properties.getProperty("oAuthConsumerSecret"))
+            .setOAuthAccessToken(properties.getProperty("oAuthAccessToken"))
+            .setOAuthAccessTokenSecret(properties.getProperty("oAuthAccessTokenSecret"));
     Twitter twitter = TwitterFactory.getSingleton();
          Query query = new Query("source:twitter4j yusukey");
          QueryResult result = twitter.search(query);
