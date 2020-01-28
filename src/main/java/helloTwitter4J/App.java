@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import twitter4j.Query;
 import twitter4j.QueryResult;
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 
@@ -38,12 +39,12 @@ public class App {
 
 
     private void foo() {
-    Twitter twitter = TwitterFactory.getSingleton;
-         Query query = new Query("source:twitter4j yusukey");
-         QueryResult result = twitter.search(query);
-         for (Status status : result.getTweets()) {
-             log.info("@" + status.getUser().getScreenName() + ":" + status.getText());
-         }
+  //  Twitter twitter = TwitterFactory.getSingleton;
+     //    Query query = new Query("source:twitter4j yusukey");
+     //    QueryResult result = twitter.search(query);
+      //   for (Status status : result.getTweets()) {
+         //    log.info("@" + status.getUser().getScreenName() + ":" + status.getText());
+      //   }
 
     }
 
