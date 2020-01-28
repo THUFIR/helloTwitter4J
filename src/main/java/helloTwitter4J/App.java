@@ -33,7 +33,7 @@ public class App {
             value = System.getenv(key);
             log.info(key + value);
         }
-       // foo();
+        foo();
     }
 
 
@@ -47,10 +47,10 @@ public class App {
             .setOAuthAccessTokenSecret(properties.getProperty("oAuthAccessTokenSecret"));
     Twitter twitter = TwitterFactory.getSingleton();
          Query query = new Query("source:twitter4j yusukey");
-         QueryResult result = twitter.search(query);
-        for (Status status : result.getTweets()) {
-             log.info("@" + status.getUser().getScreenName() + ":" + status.getText());
-        }
+     //    QueryResult result = twitter.search(query);
+     //   for (Status status : result.getTweets()) {
+      //       log.info("@" + status.getUser().getScreenName() + ":" + status.getText());
+    //    }
 
     }
 
