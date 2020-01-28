@@ -10,17 +10,15 @@ import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
 public class App {
 
-    
-
-       private static final Logger log = Logger.getLogger(App.class.getName());
+    private static final Logger log = Logger.getLogger(App.class.getName());
     private final Properties properties = new Properties();
 
-
-	private void loadProperties() throws InvalidPropertiesFormatException, IOException {
+    private void loadProperties() throws InvalidPropertiesFormatException, IOException, TwitterException {
 
         properties.loadFromXML(App.class.getResourceAsStream("/twitter.xml"));
         log.info(properties.toString());
@@ -32,23 +30,22 @@ public class App {
         for (Object obj : keySet) {
             key = obj.toString();
             value = System.getenv(key);
-            log.info(key+value);
+            log.info(key + value);
         }
         foo();
-	}
+    }
 
-
-    private void foo() {
-  //  Twitter twitter = TwitterFactory.getSingleton;
-     //    Query query = new Query("source:twitter4j yusukey");
-     //    QueryResult result = twitter.search(query);
-      //   for (Status status : result.getTweets()) {
-         //    log.info("@" + status.getUser().getScreenName() + ":" + status.getText());
-      //   }
+    private void foo() throws TwitterException {
+    Twitter twitter = TwitterFactory.getSingleton();
+         Query query = new Query("source:twitter4j yusukey");
+         QueryResult result = twitter.search(query);
+        for (Status status : result.getTweets()) {
+             log.info("@" + status.getUser().getScreenName() + ":" + status.getText());
+        }
 
     }
 
-    public static void main(String[] args) throws InvalidPropertiesFormatException, IOException {
+    public static void main(String[] args) throws InvalidPropertiesFormatException, IOException, TwitterException {
         new App().loadProperties();
     }
 
