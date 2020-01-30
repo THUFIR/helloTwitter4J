@@ -2,11 +2,10 @@ package helloTwitter4J;
 
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Logger;
-import twitter4j.Query;
-import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -18,7 +17,7 @@ public class App {
     private static final Logger log = Logger.getLogger(App.class.getName());
     //private final Properties properties = new Properties();
 
-    private Properties loadProperties() throws InvalidPropertiesFormatException, IOException {
+    private Properties loadProperties() throws IOException  {
         Properties properties = new Properties();
         properties.loadFromXML(App.class.getResourceAsStream("/twitter.xml"));
         log.fine(properties.toString());
@@ -36,7 +35,7 @@ public class App {
         return properties;
     }
 
-    private void runQuery() throws TwitterException, InvalidPropertiesFormatException, IOException {
+    private TwitterFactory configTwitterFactory() throws IOException {
         Properties properties = loadProperties();
         log.info(properties.toString());  //this matches what powershell uses
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
@@ -46,25 +45,41 @@ public class App {
                 .setOAuthAccessToken(properties.getProperty("oAuthAccessToken"))
                 .setOAuthAccessTokenSecret(properties.getProperty("oAuthAccessTokenSecret"));
 
-        //Twitter twitter = new TwitterFactory(configurationBuilder.build()).getSingleton();
-        TwitterFactory factory = new TwitterFactory(configurationBuilder.build());
-        Twitter twitter = factory.getInstance();
-
-        // Twitter twitter = new TwitterFactory(configurationBuilder.build()).getSingleton();
-        //   twitter. //       TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build);
-        //   Twitter twitter = TwitterFactory.getSingleton();
+//        Twitter twitter = new TwitterFactory(configurationBuilder.build()).getInstance();
+//        Twitter twitter = new TwitterFactory(configurationBuilder.build()).getInstance();
+        //   Twitter twitter = new TwitterFactory(configurationBuilder.build()).getInstance();
+        /*
         Query query = new Query("source:twitter4j yusukey");
         QueryResult result = twitter.search(query);
-
         log.info(result.getTweets().toString());
 
         for (Status status : result.getTweets()) {
             log.info("@" + status.getUser().getScreenName() + ":" + status.getText());
         }
+         */
+
+        TwitterFactory twitterFactory = null;
+        twitterFactory = new TwitterFactory(configurationBuilder.build());
+        return twitterFactory;
     }
 
-    public static void main(String[] args) throws InvalidPropertiesFormatException, IOException, TwitterException {
-        new App().runQuery();
+    private void getHomeTimeLine() throws TwitterException, IOException   {
+        //Twitter twitter = TwitterFactory.getSingleton();
+        Twitter twitter = configTwitterFactory().getInstance();
+        List<Status> statuses = null;
+        statuses = twitter.getHomeTimeline();
+
+        System.out.println("Showing home timeline.");
+        if (statuses != null) {
+            for (Status status : statuses) {
+                System.out.println(status.getUser().getName() + ":"
+                        + status.getText());
+            }
+        }
+    }
+
+    public static void main(String[] args) throws TwitterException, IOException  {
+        new App().getHomeTimeLine();
     }
 
 }
