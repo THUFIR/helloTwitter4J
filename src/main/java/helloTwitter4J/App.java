@@ -35,6 +35,7 @@ public class App {
 
     private TwitterFactory configTwitterFactory(Properties properties) throws IOException {
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+        
         configurationBuilder.setDebugEnabled(true)
                 .setOAuthConsumerKey(properties.getProperty("oAuthConsumerKey"))
                 .setOAuthConsumerSecret(properties.getProperty("oAuthConsumerSecret"))
