@@ -19,7 +19,7 @@ public class App {
     private static final Logger log = Logger.getLogger(App.class.getName());
     private final Properties properties = new Properties();
 
-    private void loadProperties() throws InvalidPropertiesFormatException, IOException, TwitterException {
+    private void loadProperties() throws InvalidPropertiesFormatException, IOException {
 
         properties.loadFromXML(App.class.getResourceAsStream("/twitter.xml"));
         log.fine(properties.toString());
@@ -32,22 +32,30 @@ public class App {
             key = obj.toString();
             value = System.getenv(key);
             log.fine(key + value);
+            properties.setProperty(key, value);
         }
-        foo();
     }
 
 
     
-    private void foo() throws TwitterException {
+    private void runQuery() throws TwitterException, InvalidPropertiesFormatException, IOException {
+        loadProperties();
+        log.info(properties.toString());  //this matches what powershell uses
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.setDebugEnabled(true)
             .setOAuthConsumerKey(properties.getProperty("oAuthConsumerKey"))
             .setOAuthConsumerSecret(properties.getProperty("oAuthConsumerSecret"))
             .setOAuthAccessToken(properties.getProperty("oAuthAccessToken"))
             .setOAuthAccessTokenSecret(properties.getProperty("oAuthAccessTokenSecret"));
-    Twitter twitter = TwitterFactory.getSingleton();
+
+    Twitter twitter = new TwitterFactory(configurationBuilder.build()).getSingleton();
+
+
+
+//       TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build);
+ //   Twitter twitter = TwitterFactory.getSingleton();
          Query query = new Query("source:twitter4j yusukey");
-     //    QueryResult result = twitter.search(query);
+//         QueryResult result = twitter.search(query);
      //   for (Status status : result.getTweets()) {
       //       log.info("@" + status.getUser().getScreenName() + ":" + status.getText());
     //    }
@@ -55,7 +63,7 @@ public class App {
     }
 
     public static void main(String[] args) throws InvalidPropertiesFormatException, IOException, TwitterException {
-        new App().loadProperties();
+        new App().runQuery();
     }
 
 
