@@ -27,7 +27,6 @@ public class App {
         for (Object obj : keySet) {
             key = obj.toString();
             value = System.getenv(key);
-            log.fine(key + value);
             properties.setProperty(key, value);
         }
         return properties;
@@ -35,16 +34,14 @@ public class App {
 
     private TwitterFactory configTwitterFactory(Properties properties) throws IOException {
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-        
+
         configurationBuilder.setDebugEnabled(true)
                 .setOAuthConsumerKey(properties.getProperty("oAuthConsumerKey"))
                 .setOAuthConsumerSecret(properties.getProperty("oAuthConsumerSecret"))
                 .setOAuthAccessToken(properties.getProperty("oAuthAccessToken"))
                 .setOAuthAccessTokenSecret(properties.getProperty("oAuthAccessTokenSecret"));
 
-        TwitterFactory twitterFactory = null;
-        twitterFactory = new TwitterFactory(configurationBuilder.build());
-        return twitterFactory;
+        return new TwitterFactory(configurationBuilder.build());
     }
 
     private void getHomeTimeLine() throws TwitterException, IOException {
