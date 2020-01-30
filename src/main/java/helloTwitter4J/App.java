@@ -46,18 +46,17 @@ public class App {
                 .setOAuthAccessTokenSecret(properties.getProperty("oAuthAccessTokenSecret"));
 
         //Twitter twitter = new TwitterFactory(configurationBuilder.build()).getSingleton();
-
         TwitterFactory factory = new TwitterFactory(configurationBuilder.build());
         Twitter twitter = factory.getInstance();
 
         // Twitter twitter = new TwitterFactory(configurationBuilder.build()).getSingleton();
         //   twitter. //       TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build);
         //   Twitter twitter = TwitterFactory.getSingleton();
-//        Query query = new Query("source:twitter4j yusukey");
-  //      QueryResult result = twitter.search(query);
-        //   for (Status status : result.getTweets()) {
-        //       log.info("@" + status.getUser().getScreenName() + ":" + status.getText());
-        //    }
+        Query query = new Query("source:twitter4j yusukey");
+        QueryResult result = twitter.search(query);
+        for (Status status : result.getTweets()) {
+            //       log.info("@" + status.getUser().getScreenName() + ":" + status.getText());
+        }
 
     }
 
