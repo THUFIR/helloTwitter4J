@@ -36,8 +36,8 @@ public class App {
     }
 
     private void runQuery() throws TwitterException, InvalidPropertiesFormatException, IOException {
-        properties = loadProperties();
-        log.fine(properties.toString());  //this matches what powershell uses
+        Properties properties = loadProperties();
+        log.info(properties.toString());  //this matches what powershell uses
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.setDebugEnabled(true)
                 .setOAuthConsumerKey(properties.getProperty("oAuthConsumerKey"))
@@ -45,13 +45,16 @@ public class App {
                 .setOAuthAccessToken(properties.getProperty("oAuthAccessToken"))
                 .setOAuthAccessTokenSecret(properties.getProperty("oAuthAccessTokenSecret"));
 
-        Twitter twitter = new TwitterFactory(configurationBuilder.build()).getSingleton();
+        //Twitter twitter = new TwitterFactory(configurationBuilder.build()).getSingleton();
+
+        TwitterFactory factory = new TwitterFactory(configurationBuilder.build());
+        Twitter twitter = factory.getInstance();
 
         // Twitter twitter = new TwitterFactory(configurationBuilder.build()).getSingleton();
         //   twitter. //       TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build);
         //   Twitter twitter = TwitterFactory.getSingleton();
-        Query query = new Query("source:twitter4j yusukey");
-        QueryResult result = twitter.search(query);
+//        Query query = new Query("source:twitter4j yusukey");
+  //      QueryResult result = twitter.search(query);
         //   for (Status status : result.getTweets()) {
         //       log.info("@" + status.getUser().getScreenName() + ":" + status.getText());
         //    }
