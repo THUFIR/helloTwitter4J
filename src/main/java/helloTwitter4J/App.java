@@ -1,7 +1,6 @@
 package helloTwitter4J;
 
 import java.io.IOException;
-import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -15,9 +14,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class App {
 
     private static final Logger log = Logger.getLogger(App.class.getName());
-    //private final Properties properties = new Properties();
-
-    private Properties loadProperties() throws IOException  {
+    private Properties loadProperties() throws IOException {
         Properties properties = new Properties();
         properties.loadFromXML(App.class.getResourceAsStream("/twitter.xml"));
         log.fine(properties.toString());
@@ -45,26 +42,12 @@ public class App {
                 .setOAuthAccessToken(properties.getProperty("oAuthAccessToken"))
                 .setOAuthAccessTokenSecret(properties.getProperty("oAuthAccessTokenSecret"));
 
-//        Twitter twitter = new TwitterFactory(configurationBuilder.build()).getInstance();
-//        Twitter twitter = new TwitterFactory(configurationBuilder.build()).getInstance();
-        //   Twitter twitter = new TwitterFactory(configurationBuilder.build()).getInstance();
-        /*
-        Query query = new Query("source:twitter4j yusukey");
-        QueryResult result = twitter.search(query);
-        log.info(result.getTweets().toString());
-
-        for (Status status : result.getTweets()) {
-            log.info("@" + status.getUser().getScreenName() + ":" + status.getText());
-        }
-         */
-
         TwitterFactory twitterFactory = null;
         twitterFactory = new TwitterFactory(configurationBuilder.build());
         return twitterFactory;
     }
 
-    private void getHomeTimeLine() throws TwitterException, IOException   {
-        //Twitter twitter = TwitterFactory.getSingleton();
+    private void getHomeTimeLine() throws TwitterException, IOException {
         Twitter twitter = configTwitterFactory().getInstance();
         List<Status> statuses = null;
         statuses = twitter.getHomeTimeline();
@@ -78,7 +61,7 @@ public class App {
         }
     }
 
-    public static void main(String[] args) throws TwitterException, IOException  {
+    public static void main(String[] args) throws TwitterException, IOException {
         new App().getHomeTimeLine();
     }
 
