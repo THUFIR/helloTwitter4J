@@ -15,10 +15,9 @@ public class App {
 
     private static final Logger log = Logger.getLogger(App.class.getName());
 
-    private Properties loadProperties() throws IOException {
+    private Properties loadProperties(String filePrefix) throws IOException {
         Properties properties = new Properties();
-        properties.loadFromXML(App.class.getResourceAsStream("/twitter.xml"));
-        log.fine(properties.toString());
+        properties.loadFromXML(App.class.getResourceAsStream("/" + filePrefix + ".xml"));
 
         Set<Object> keySet = properties.keySet();
         String key = null;
@@ -45,12 +44,12 @@ public class App {
     }
 
     private void getHomeTimeLine() throws TwitterException, IOException {
-        Twitter twitter = configTwitterFactory(loadProperties()).getInstance();
+        Twitter twitter = configTwitterFactory(loadProperties("twitter")).getInstance();
         List<Status> statuses = null;
         statuses = twitter.getUserTimeline("KimKardashian");
         if (statuses != null) {
             for (Status status : statuses) {
-                log.info(status.getUser().getName() + ":" + status.getText());
+                log.info(status.getText());
             }
         }
     }
