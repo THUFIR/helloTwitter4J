@@ -33,9 +33,7 @@ public class App {
         return properties;
     }
 
-    private TwitterFactory configTwitterFactory() throws IOException {
-        Properties properties = loadProperties();
-        log.fine(properties.toString());  //this matches what powershell uses
+    private TwitterFactory configTwitterFactory(Properties properties) throws IOException {
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.setDebugEnabled(true)
                 .setOAuthConsumerKey(properties.getProperty("oAuthConsumerKey"))
@@ -49,13 +47,12 @@ public class App {
     }
 
     private void getHomeTimeLine() throws TwitterException, IOException {
-        Twitter twitter = configTwitterFactory().getInstance();
+        Twitter twitter = configTwitterFactory(loadProperties()).getInstance();
         List<Status> statuses = null;
-        //  statuses = twitter.getHomeTimeline();
         statuses = twitter.getUserTimeline("KimKardashian");
         if (statuses != null) {
             for (Status status : statuses) {
-                log.fine(status.getUser().getName() + ":" + status.getText());
+                log.info(status.getUser().getName() + ":" + status.getText());
             }
         }
     }
