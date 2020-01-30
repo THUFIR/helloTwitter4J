@@ -14,6 +14,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class App {
 
     private static final Logger log = Logger.getLogger(App.class.getName());
+
     private Properties loadProperties() throws IOException {
         Properties properties = new Properties();
         properties.loadFromXML(App.class.getResourceAsStream("/twitter.xml"));
@@ -34,7 +35,7 @@ public class App {
 
     private TwitterFactory configTwitterFactory() throws IOException {
         Properties properties = loadProperties();
-        log.info(properties.toString());  //this matches what powershell uses
+        log.fine(properties.toString());  //this matches what powershell uses
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.setDebugEnabled(true)
                 .setOAuthConsumerKey(properties.getProperty("oAuthConsumerKey"))
@@ -50,13 +51,11 @@ public class App {
     private void getHomeTimeLine() throws TwitterException, IOException {
         Twitter twitter = configTwitterFactory().getInstance();
         List<Status> statuses = null;
-        statuses = twitter.getHomeTimeline();
-
-        System.out.println("Showing home timeline.");
+        //  statuses = twitter.getHomeTimeline();
+        statuses = twitter.getUserTimeline("KimKardashian");
         if (statuses != null) {
             for (Status status : statuses) {
-                System.out.println(status.getUser().getName() + ":"
-                        + status.getText());
+                log.fine(status.getUser().getName() + ":" + status.getText());
             }
         }
     }
